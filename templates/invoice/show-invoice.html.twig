@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<h1>Facture : {{ invoice.id }}</h1>
+
+<p>Titre : {{ invoice.title }}</p>
+<p>Description : {{ invoice.description }}</p>
+<p>Statut : {{ invoice.status }}</p>
+<p>Date de création : {{ invoice.createdAt | date('y-m-d') }}</p>
+
+{% endblock %}

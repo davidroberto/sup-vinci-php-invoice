@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<h1>Liste des factures : </h1>
+
+{% for invoice in invoices %}
+
+    <article>
+
+        <p>Titre : {{ invoice.title }}</p>
+        <p>Description : {{ invoice.description }}</p>
+        <p>Statut : {{ invoice.status }}</p>
+        <p>Date de création : {{ invoice.createdAt | date('y-m-d') }}</p>
+        <a href="{{ path('get_invoice_by_id', {'id' : invoice.id}) }}">Voir le détail de la facture</a>
+
+        <a href="{{ path('update_invoice', {'id' : invoice.id}) }}">Mettre à jour la facture</a>
+
+        <form method="POST" action="{{ path('delete_invoice', {'id': invoice.id}) }}">
+            <button type="submit">Supprimer</button>
+        </form>
+
+        <form method="POST" action="{{ path('pay_invoice', {'id': invoice.id}) }}">
+            <button type="submit">Payer</button>
+        </form>
+
+
+
+
+    </article>
+{% endfor %}
+
+{% endblock %}
