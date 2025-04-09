@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Entity\User;
 use App\Repository\InvoiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -19,7 +20,7 @@ class PayInvoiceUseCase
         $this->entityManager = $entityManager;
     }
 
-    public function execute(int $id) {
+    public function execute(int $id, User $user) {
 
         $invoice = $this->invoiceRepository->find($id);
 
@@ -28,7 +29,7 @@ class PayInvoiceUseCase
         }
 
         try {
-            $invoice->pay();
+            $invoice->pay($user);
         } catch(\Exception $e) {
             throw new \Exception($e->getMessage());
         }

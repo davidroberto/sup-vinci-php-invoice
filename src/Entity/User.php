@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -31,6 +32,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+
+    public function __construct(string $email, string $password, string $role, UserPasswordHasherInterface $hasher) {
+
+
+        $this->email = $email;
+        $this->password = $hasher->hashPassword($this, $password);
+        $this->roles[] = $role;
+
+
+    }
 
     public function getId(): ?int
     {

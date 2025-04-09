@@ -32,9 +32,17 @@ class Invoice
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $paidAt = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $createdBy = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $paidBy = null;
 
 
-    public function __construct($title, $price, $description = null)
+
+    public function __construct(string $title, float $price, User $user, $description = null)
     {
         $this->verifyTitleLength($title);
         $this->verifyPriceAmount($price);
@@ -42,12 +50,12 @@ class Invoice
         $this->price = $price;
         $this->title = $title;
         $this->description = $description;
+        $this->createdBy = $user;
         $this->createdAt = new \DateTime();
         $this->status = "PENDING";
-
     }
 
-    public function pay() {
+    public function pay(User $user) {
 
         if ($this->status !== "PENDING") {
             throw new \Exception("Invoice cannot be paid");
@@ -55,6 +63,7 @@ class Invoice
 
         $this->status = "PAID";
         $this->paidAt = new \DateTime();
+        $this->paidBy = $user;
     }
 
 
@@ -144,6 +153,30 @@ class Invoice
     public function setStatus(string $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): static
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function getPaidBy(): ?User
+    {
+        return $this->paidBy;
+    }
+
+    public function setPaidBy(?User $paidBy): static
+    {
+        $this->paidBy = $paidBy;
 
         return $this;
     }

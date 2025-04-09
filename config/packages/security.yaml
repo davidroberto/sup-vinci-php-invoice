@@ -19,7 +19,7 @@ security:
             form_login:
                 login_path: login
                 check_path: login
-                default_target_path: invoices_list
+                default_target_path: list_invoices
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

@@ -15,7 +15,7 @@ class ListInvoicesUseCase
     }
 
     public function execute() {
-        $invoices = $this->invoiceRepository->findAll();
+        $invoices = $this->invoiceRepository->findInvoicesWithUser();
 
         return $invoices;
     }

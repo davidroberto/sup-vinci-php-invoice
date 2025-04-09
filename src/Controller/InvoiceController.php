@@ -48,6 +48,8 @@ class InvoiceController extends AbstractController
             $title = $request->request->get('title');
             $description = $request->request->get('description');
             $price = (float)$request->request->get('price');
+            $user = $this->getUser();
+
 
             if (!$title || !$price) {
                 $this->addFlash("error", "Le titre et le prix doivent être renseignés");
@@ -55,7 +57,9 @@ class InvoiceController extends AbstractController
             }
 
             try {
-                $this->createInvoiceUseCase->execute($title, $description, $price);
+                $this->createInvoiceUseCase->execute($title, $price, $description, $user);
+
+                $this->addFlash("success", "Invoice created");
             } catch(\Exception $e) {
                 $this->addFlash("error", $e->getMessage());
             }
@@ -142,11 +146,12 @@ class InvoiceController extends AbstractController
     }
 
 
-    #[Route('admin/pay/invoice/{id}', name: 'pay_invoice', methods: ['POST'])]
+    #[Route('pay/invoice/{id}', name: 'pay_invoice', methods: ['POST'])]
     public function payInvoice(int $id, Request $request): Response {
 
+        $user = $this->getUser();
         try {
-            $this->payInvoiceUseCase->execute($id);
+            $this->payInvoiceUseCase->execute($id, $user);
         } catch(\Exception $e) {
             return $this->render('404.html.twig', []);
         }

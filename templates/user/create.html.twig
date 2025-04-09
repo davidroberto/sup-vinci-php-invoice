@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <form method="POST">
+
+        <label>Email
+            <input type="email" name="email" />
+        </label>
+
+        <label>Mot de passe
+            <input type="password" name="password" />
+        </label>
+
+        <label>Role
+            <select name="role">
+                <option value="artisan">Artisan</option>
+                <option value="financial">Responsable Financier</option>
+            </select>
+        </label>
+
+        <button type="submit">Créer</button>
+
+    </form>
+{% endblock %}

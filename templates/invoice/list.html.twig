@@ -11,6 +11,10 @@
         <p>Description : {{ invoice.description }}</p>
         <p>Statut : {{ invoice.status }}</p>
         <p>Date de création : {{ invoice.createdAt | date('y-m-d') }}</p>
+
+
+        <p>Créée par : {{ invoice.createdBy.email }}</p>
+
         <a href="{{ path('get_invoice_by_id', {'id' : invoice.id}) }}">Voir le détail de la facture</a>
 
         <a href="{{ path('update_invoice', {'id' : invoice.id}) }}">Mettre à jour la facture</a>
