@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\InvoiceRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ApiResource()]
 #[ORM\Entity(repositoryClass: InvoiceRepository::class)]
 class Invoice
 {
@@ -64,6 +66,7 @@ class Invoice
         $this->status = "PAID";
         $this->paidAt = new \DateTime();
         $this->paidBy = $user;
+
     }
 
 
